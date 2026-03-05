@@ -3,9 +3,7 @@
 
 ## Description:-                                                                                                      
 KrishiVigil.ai is an AI-powered agriculture platform that helps farmers detect crop diseases early using computer vision. 
-Farmers can upload images of any infected part of a crop (leaf, fruit, stem, or plant surface). The system analyzes the image using a deep learning model
-and generates a complete crop health report including disease prediction, confidence score, yield loss estimation, treatment suggestions, weather risk analysis, 
-and government scheme recommendations.
+Farmers can upload images of any infected part of a crop (leaf, fruit, stem, or plant surface). The system analyzes the image using a deep learning model and generates a complete crop health report including disease prediction, confidence score, yield loss estimation, treatment suggestions, weather risk analysis, and government scheme recommendations.
 
 ## Features:-
 - 🌿 AI-based crop disease detection from leaf, fruit, stem, or any infected plant area
