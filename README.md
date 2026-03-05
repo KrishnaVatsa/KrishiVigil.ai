@@ -99,7 +99,7 @@ Diseases: Late Blight, Early Blight, Leaf Spot, Healthy
 Indian fungicide brand names used (Ridomil Gold, Dithane M-45, etc.)
 
 ## FRONTEND KEY DETAILS:-
-- API_BASE = "http://localhost:5000" (top of App.jsx)
+- API_BASE =(top of App.jsx)
 - GPS: navigator.geolocation on login → calls fetchWeather()
 - Image upload → handleAnalyze() → POST /predict → setApiResult(data)
 - All result cards read from apiResult (Flask JSON response)
