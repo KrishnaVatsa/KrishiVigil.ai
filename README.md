@@ -26,8 +26,8 @@ and government scheme recommendations.
 The trained model is exported as a `.h5` file and integrated with the Flask backend for real-time disease prediction.
 
  ## Tech Stack:-
- - Frontend: React + Vite, runs at http://localhost:5173
-- Backend: Flask (Python 3.11), runs at http://localhost:5000
+ - Frontend: React + Vite
+- Backend: Flask (Python 3.11)
 - AI Model: EfficientNetB3 trained on PlantVillage dataset (Kaggle)
   99.6% accuracy, 38 classes, exported as plant_model.h5
 - Weather: OpenWeatherMap free API (key: c8d59e65197776ffdefe8cdcf61e726e)
