@@ -105,44 +105,46 @@ Indian fungicide brand names used (Ridomil Gold, Dithane M-45, etc.)
 - All result cards read from apiResult (Flask JSON response)
 - weatherData state populated from GET /weather or from /predict response
 
-## Application Screenshots:-
+## Application Screenshots
 
 ### Home Screen
-<img src="screenshots/home.png" width="500">
-
-<img src="screenshots/home2.png" width="500">
+<p>
+  <img src="screenshots/home.png" width="300">
+  <img src="screenshots/home2.png" width="300">
+</p>
 
 ### Profile
-<img src="screenshots/profilewindow.png" width="500">
+<img src="screenshots/profilewindow.png" width="300">
 
 ### Language Change
-<img src="screenshots/languagechange.png" width="500">
+<img src="screenshots/languagechange.png" width="300">
 
 ### Image Upload
-<img src="screenshots/upload.png" width="500">
+<img src="screenshots/upload.png" width="300">
 
 ### Farm Details Input From User
-<img src="screenshots/farmdetailsinput.png" width="500">
+<img src="screenshots/farmdetailsinput.png" width="300">
 
 ### Result Dashboard
-<img src="screenshots/resultdashboard.png" width="500">
+<img src="screenshots/resultdashboard.png" width="300">
 
 ### Disease Detection Result
-<img src="screenshots/result.png" width="500">
+<img src="screenshots/result.png" width="300">
 
 ### Treatment Recommendations & Action Plan
-<img src="screenshots/treatment.png" width="500">
+<img src="screenshots/treatment.png" width="300">
 
 ### Weather Risk Analysis
-<img src="screenshots/weather.png" width="500">
-
-<img src="screenshots/weather2.png" width="500">
+<p>
+  <img src="screenshots/weather.png" width="300">
+  <img src="screenshots/weather2.png" width="300">
+</p>
 
 ### Financial Loss Estimation & Government Scheme Suggestions
-<img src="screenshots/loss.png" width="500">
+<img src="screenshots/loss.png" width="300">
 
 ### Explore Government Schemes
-<img src="screenshots/govtschemes.png" width="500">
+<img src="screenshots/govtschemes.png" width="300">
 
 ### Download Previous Crop Health Report
-<img src="screenshots/report.png" width="500">
+<img src="screenshots/report.png" width="300">
