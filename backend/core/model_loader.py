@@ -7,9 +7,9 @@
 import os
 
 # ── These hold model in memory across all requests ────────────
-_model       = None   # TensorFlow model object
-_class_names = None   # List of class name strings
-_num_classes = None   # Number of output classes (int)
+_model = None  # TensorFlow model object
+_class_names = None  # List of class name strings
+_num_classes = None  # Number of output classes (int)
 
 
 # ══════════════════════════════════════════════════════════════
@@ -39,44 +39,44 @@ MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "plant_model.h5")
 # DO NOT CHANGE THE ORDER — it must match your training
 # ─────────────────────────────────────────────────────────────
 PLANTVILLAGE_38 = [
-    "Apple___Apple_scab",                                       # class 0
-    "Apple___Black_rot",                                        # class 1
-    "Apple___Cedar_apple_rust",                                 # class 2
-    "Apple___healthy",                                          # class 3
-    "Blueberry___healthy",                                      # class 4
-    "Cherry_(including_sour)___Powdery_mildew",                 # class 5
-    "Cherry_(including_sour)___healthy",                        # class 6
-    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",       # class 7
-    "Corn_(maize)___Common_rust_",                              # class 8
-    "Corn_(maize)___Northern_Leaf_Blight",                      # class 9
-    "Corn_(maize)___healthy",                                   # class 10
-    "Grape___Black_rot",                                        # class 11
-    "Grape___Esca_(Black_Measles)",                             # class 12
-    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",               # class 13
-    "Grape___healthy",                                          # class 14
-    "Orange___Haunglongbing_(Citrus_greening)",                  # class 15
-    "Peach___Bacterial_spot",                                   # class 16
-    "Peach___healthy",                                          # class 17
-    "Pepper,_bell___Bacterial_spot",                            # class 18
-    "Pepper,_bell___healthy",                                   # class 19
-    "Potato___Early_blight",                                    # class 20
-    "Potato___Late_blight",                                     # class 21
-    "Potato___healthy",                                         # class 22
-    "Raspberry___healthy",                                      # class 23
-    "Soybean___healthy",                                        # class 24
-    "Squash___Powdery_mildew",                                  # class 25
-    "Strawberry___Leaf_scorch",                                 # class 26
-    "Strawberry___healthy",                                     # class 27
-    "Tomato___Bacterial_spot",                                  # class 28
-    "Tomato___Early_blight",                                    # class 29
-    "Tomato___Late_blight",                                     # class 30
-    "Tomato___Leaf_Mold",                                       # class 31
-    "Tomato___Septoria_leaf_spot",                              # class 32
-    "Tomato___Spider_mites Two-spotted_spider_mite",            # class 33
-    "Tomato___Target_Spot",                                     # class 34
-    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",                   # class 35
-    "Tomato___Tomato_mosaic_virus",                             # class 36
-    "Tomato___healthy",                                         # class 37
+    "Apple___Apple_scab",  # class 0
+    "Apple___Black_rot",  # class 1
+    "Apple___Cedar_apple_rust",  # class 2
+    "Apple___healthy",  # class 3
+    "Blueberry___healthy",  # class 4
+    "Cherry_(including_sour)___Powdery_mildew",  # class 5
+    "Cherry_(including_sour)___healthy",  # class 6
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",  # class 7
+    "Corn_(maize)___Common_rust_",  # class 8
+    "Corn_(maize)___Northern_Leaf_Blight",  # class 9
+    "Corn_(maize)___healthy",  # class 10
+    "Grape___Black_rot",  # class 11
+    "Grape___Esca_(Black_Measles)",  # class 12
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",  # class 13
+    "Grape___healthy",  # class 14
+    "Orange___Haunglongbing_(Citrus_greening)",  # class 15
+    "Peach___Bacterial_spot",  # class 16
+    "Peach___healthy",  # class 17
+    "Pepper,_bell___Bacterial_spot",  # class 18
+    "Pepper,_bell___healthy",  # class 19
+    "Potato___Early_blight",  # class 20
+    "Potato___Late_blight",  # class 21
+    "Potato___healthy",  # class 22
+    "Raspberry___healthy",  # class 23
+    "Soybean___healthy",  # class 24
+    "Squash___Powdery_mildew",  # class 25
+    "Strawberry___Leaf_scorch",  # class 26
+    "Strawberry___healthy",  # class 27
+    "Tomato___Bacterial_spot",  # class 28
+    "Tomato___Early_blight",  # class 29
+    "Tomato___Late_blight",  # class 30
+    "Tomato___Leaf_Mold",  # class 31
+    "Tomato___Septoria_leaf_spot",  # class 32
+    "Tomato___Spider_mites Two-spotted_spider_mite",  # class 33
+    "Tomato___Target_Spot",  # class 34
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus",  # class 35
+    "Tomato___Tomato_mosaic_virus",  # class 36
+    "Tomato___healthy",  # class 37
 ]
 
 
@@ -101,7 +101,7 @@ def load_model_once():
         print(f"  WARNING: plant_model.h5 NOT found at:")
         print(f"  {os.path.abspath(MODEL_PATH)}")
         print("  Running in DEMO MODE — place model file to enable AI\n")
-        _model       = None
+        _model = None
         _class_names = []
         _num_classes = 0
         return None
@@ -114,6 +114,7 @@ def load_model_once():
         # This may take 10-30 seconds on first load
         # ══════════════════════════════════════════════════════
         import tensorflow as tf
+
         _model = tf.keras.models.load_model(MODEL_PATH)
 
         # ── AUTO-DETECT CLASS COUNT ───────────────────────────
@@ -161,7 +162,7 @@ def load_model_once():
     except Exception as e:
         print(f"  ERROR loading model: {e}")
         print("  Check that tensorflow is installed: pip install tensorflow==2.15.0")
-        _model       = None
+        _model = None
         _class_names = []
         _num_classes = 0
         return None

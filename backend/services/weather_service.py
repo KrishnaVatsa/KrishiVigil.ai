@@ -25,7 +25,7 @@ from datetime import datetime
 OWM_API_KEY = "c8d59e65197776ffdefe8cdcf61e726e"
 
 # OpenWeatherMap endpoints (do not change these URLs)
-OWM_CURRENT_URL  = "https://api.openweathermap.org/data/2.5/weather"
+OWM_CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather"
 OWM_FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 
 # How long to wait for API response before giving up
@@ -46,7 +46,7 @@ def get_weather_by_coords(lat, lon):
       - Risk score passed to AI for health score + urgency
     """
     try:
-        current  = _fetch_current(lat, lon)
+        current = _fetch_current(lat, lon)
         forecast = _fetch_forecast(lat, lon)
         return _build_response(current, forecast, lat, lon)
 
@@ -64,12 +64,12 @@ def _fetch_current(lat, lon):
     resp = requests.get(
         OWM_CURRENT_URL,
         params={
-            "lat":   lat,
-            "lon":   lon,
+            "lat": lat,
+            "lon": lon,
             "appid": OWM_API_KEY,
-            "units": "metric"    # Celsius (change to "imperial" for Fahrenheit)
+            "units": "metric",  # Celsius (change to "imperial" for Fahrenheit)
         },
-        timeout=TIMEOUT_SECS
+        timeout=TIMEOUT_SECS,
     )
     resp.raise_for_status()
     return resp.json()
@@ -80,13 +80,13 @@ def _fetch_forecast(lat, lon):
     resp = requests.get(
         OWM_FORECAST_URL,
         params={
-            "lat":   lat,
-            "lon":   lon,
+            "lat": lat,
+            "lon": lon,
             "appid": OWM_API_KEY,
             "units": "metric",
-            "cnt":   40          # 40 x 3-hour slots = ~5 days
+            "cnt": 40,  # 40 x 3-hour slots = ~5 days
         },
-        timeout=TIMEOUT_SECS
+        timeout=TIMEOUT_SECS,
     )
     resp.raise_for_status()
     return resp.json()
@@ -96,11 +96,11 @@ def _build_response(current, forecast, lat, lon):
     """Builds the structured weather dict from raw API responses."""
 
     # Extract values from OpenWeatherMap current weather response
-    temp      = current["main"]["temp"]
-    humidity  = current["main"]["humidity"]
-    wind_ms   = current["wind"]["speed"]
-    wind_kph  = round(wind_ms * 3.6, 1)   # Convert m/s to km/h
-    city      = current.get("name", "Your Location")
+    temp = current["main"]["temp"]
+    humidity = current["main"]["humidity"]
+    wind_ms = current["wind"]["speed"]
+    wind_kph = round(wind_ms * 3.6, 1)  # Convert m/s to km/h
+    city = current.get("name", "Your Location")
 
     # Rain probability from next 3-hour forecast slot
     rain_pct = 0
@@ -122,18 +122,18 @@ def _build_response(current, forecast, lat, lon):
     daily_forecast = _build_daily_forecast(forecast)
 
     return {
-        "location":    city,
-        "lat":         lat,
-        "lon":         lon,
-        "temperature": round(temp, 1),    # Used in weather card
-        "humidity":    humidity,          # Used in weather card
-        "rain_prob":   rain_pct,          # Used in weather card
-        "wind_kph":    wind_kph,          # Used in weather card
-        "risk_score":  risk_score,        # Used in health score + urgency
-        "risk_label":  _risk_label(risk_score),
-        "warnings":    warnings,          # Used in field warnings section
-        "forecast":    daily_forecast,    # Used in 5-day forecast strip
-        "live":        True,              # Tells frontend this is real data
+        "location": city,
+        "lat": lat,
+        "lon": lon,
+        "temperature": round(temp, 1),  # Used in weather card
+        "humidity": humidity,  # Used in weather card
+        "rain_prob": rain_pct,  # Used in weather card
+        "wind_kph": wind_kph,  # Used in weather card
+        "risk_score": risk_score,  # Used in health score + urgency
+        "risk_label": _risk_label(risk_score),
+        "warnings": warnings,  # Used in field warnings section
+        "forecast": daily_forecast,  # Used in 5-day forecast strip
+        "live": True,  # Tells frontend this is real data
     }
 
 
@@ -153,11 +153,11 @@ def _calculate_disease_risk(temp, humidity, rain_pct, wind_kph):
 
     # Temperature component (max 30 points)
     if 10 <= temp <= 25:
-        score += 30    # ideal fungal growth range
+        score += 30  # ideal fungal growth range
     elif 25 < temp <= 30:
-        score += 15    # warm but manageable
+        score += 15  # warm but manageable
     else:
-        score += 5     # too hot or too cold for most fungal disease
+        score += 5  # too hot or too cold for most fungal disease
 
     # Humidity component (max 35 points)
     if humidity >= 90:
@@ -189,9 +189,12 @@ def _calculate_disease_risk(temp, humidity, rain_pct, wind_kph):
 
 
 def _risk_label(score):
-    if score >= 75: return "CRITICAL"
-    if score >= 55: return "HIGH"
-    if score >= 35: return "MODERATE"
+    if score >= 75:
+        return "CRITICAL"
+    if score >= 55:
+        return "HIGH"
+    if score >= 35:
+        return "MODERATE"
     return "LOW"
 
 
@@ -203,34 +206,49 @@ def _build_warnings(temp, humidity, rain_pct, wind_kph):
     warnings = []
 
     if rain_pct >= 60:
-        warnings.append({
-            "type": "rain", "level": "high",
-            "text": f"Do not irrigate - {rain_pct}% rain probability today"
-        })
+        warnings.append(
+            {
+                "type": "rain",
+                "level": "high",
+                "text": f"Do not irrigate - {rain_pct}% rain probability today",
+            }
+        )
 
     if wind_kph >= 25:
-        warnings.append({
-            "type": "wind", "level": "medium",
-            "text": f"Avoid pesticide spraying - wind speed {wind_kph} km/h"
-        })
+        warnings.append(
+            {
+                "type": "wind",
+                "level": "medium",
+                "text": f"Avoid pesticide spraying - wind speed {wind_kph} km/h",
+            }
+        )
 
     if humidity >= 80:
-        warnings.append({
-            "type": "humidity", "level": "high",
-            "text": f"High humidity {humidity}% - fungal spread risk tonight"
-        })
+        warnings.append(
+            {
+                "type": "humidity",
+                "level": "high",
+                "text": f"High humidity {humidity}% - fungal spread risk tonight",
+            }
+        )
 
     if 10 <= temp <= 25 and humidity >= 75:
-        warnings.append({
-            "type": "disease", "level": "critical",
-            "text": f"Critical: {round(temp)}C + high humidity - ideal disease conditions"
-        })
+        warnings.append(
+            {
+                "type": "disease",
+                "level": "critical",
+                "text": f"Critical: {round(temp)}C + high humidity - ideal disease conditions",
+            }
+        )
 
     if not warnings:
-        warnings.append({
-            "type": "ok", "level": "low",
-            "text": "Weather conditions are currently favourable for field operations"
-        })
+        warnings.append(
+            {
+                "type": "ok",
+                "level": "low",
+                "text": "Weather conditions are currently favourable for field operations",
+            }
+        )
 
     return warnings
 
@@ -240,13 +258,13 @@ def _build_daily_forecast(forecast):
     Builds one entry per day from 3-hourly OWM forecast data.
     Returns up to 5 days.
     """
-    days     = {}
+    days = {}
     day_names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
     for slot in forecast.get("list", []):
-        dt   = datetime.fromtimestamp(slot["dt"])
+        dt = datetime.fromtimestamp(slot["dt"])
         date = dt.strftime("%Y-%m-%d")
-        day  = day_names[dt.weekday()]
+        day = day_names[dt.weekday()]
 
         if date not in days:
             weather_main = slot["weather"][0]["main"].lower()
@@ -258,16 +276,16 @@ def _build_daily_forecast(forecast):
                 icon = "sun"
 
             days[date] = {
-                "day":  day,
+                "day": day,
                 "type": icon,
-                "hi":   round(slot["main"]["temp_max"]),
-                "lo":   round(slot["main"]["temp_min"]),
+                "hi": round(slot["main"]["temp_max"]),
+                "lo": round(slot["main"]["temp_min"]),
                 "rain": f"{round(slot.get('pop', 0) * 100)}%",
             }
 
     result = list(days.values())[:5]
     if result:
-        result[0]["day"] = "Today"   # Label first entry as Today
+        result[0]["day"] = "Today"  # Label first entry as Today
 
     return result
 
@@ -279,26 +297,38 @@ def _mock_weather(lat=30.9, lon=75.8):
     This is NOT the same as demo mode.
     """
     return {
-        "location":    "Your Location (Offline)",
-        "lat":         lat,
-        "lon":         lon,
+        "location": "Your Location (Offline)",
+        "lat": lat,
+        "lon": lon,
         "temperature": 21.0,
-        "humidity":    87,
-        "rain_prob":   72,
-        "wind_kph":    28.0,
-        "risk_score":  83,
-        "risk_label":  "CRITICAL",
+        "humidity": 87,
+        "rain_prob": 72,
+        "wind_kph": 28.0,
+        "risk_score": 83,
+        "risk_label": "CRITICAL",
         "warnings": [
-            {"type": "rain",     "level": "high",     "text": "Do not irrigate - 72% rain probability (offline data)"},
-            {"type": "humidity", "level": "high",     "text": "High humidity 87% - fungal spread risk tonight"},
-            {"type": "disease",  "level": "critical", "text": "Critical conditions for disease spread (offline data)"},
+            {
+                "type": "rain",
+                "level": "high",
+                "text": "Do not irrigate - 72% rain probability (offline data)",
+            },
+            {
+                "type": "humidity",
+                "level": "high",
+                "text": "High humidity 87% - fungal spread risk tonight",
+            },
+            {
+                "type": "disease",
+                "level": "critical",
+                "text": "Critical conditions for disease spread (offline data)",
+            },
         ],
         "forecast": [
-            {"day": "Today", "type": "rain",  "hi": 24, "lo": 18, "rain": "72%"},
-            {"day": "Tue",   "type": "cloud", "hi": 27, "lo": 19, "rain": "30%"},
-            {"day": "Wed",   "type": "sun",   "hi": 31, "lo": 21, "rain": "5%"},
-            {"day": "Thu",   "type": "rain",  "hi": 26, "lo": 18, "rain": "55%"},
-            {"day": "Fri",   "type": "sun",   "hi": 30, "lo": 20, "rain": "10%"},
+            {"day": "Today", "type": "rain", "hi": 24, "lo": 18, "rain": "72%"},
+            {"day": "Tue", "type": "cloud", "hi": 27, "lo": 19, "rain": "30%"},
+            {"day": "Wed", "type": "sun", "hi": 31, "lo": 21, "rain": "5%"},
+            {"day": "Thu", "type": "rain", "hi": 26, "lo": 18, "rain": "55%"},
+            {"day": "Fri", "type": "sun", "hi": 30, "lo": 20, "rain": "10%"},
         ],
         "live": False,
     }

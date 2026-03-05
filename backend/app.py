@@ -20,10 +20,17 @@ app = Flask(__name__)
 # this Flask backend (localhost:5000) without browser blocking
 # DO NOT CHANGE THIS unless you deploy to a real server
 # ─────────────────────────────────────────────────────────────
-CORS(app, resources={r"/*": {"origins": [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]}})
+CORS(
+    app,
+    resources={
+        r"/*": {
+            "origins": [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+            ]
+        }
+    },
+)
 
 # ── REGISTER ROUTES ───────────────────────────────────────────
 # predict_bp handles:  POST /predict   (AI image analysis)
@@ -39,12 +46,12 @@ app.register_blueprint(weather_bp)
 @app.route("/", methods=["GET"])
 def health():
     return {
-        "status":  "KrishiVigil.ai backend running",
+        "status": "KrishiVigil.ai backend running",
         "version": "2.0.0",
         "endpoints": {
             "predict": "POST /predict",
             "weather": "GET  /weather?lat=X&lon=Y",
-        }
+        },
     }
 
 

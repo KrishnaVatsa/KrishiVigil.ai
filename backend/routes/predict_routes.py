@@ -29,7 +29,14 @@ def predict():
 
     # ── STEP 1: Validate image file ───────────────────────────
     if "image" not in request.files:
-        return jsonify({"error": "No image file — send as multipart/form-data with key 'image'"}), 400
+        return (
+            jsonify(
+                {
+                    "error": "No image file — send as multipart/form-data with key 'image'"
+                }
+            ),
+            400,
+        )
 
     file = request.files["image"]
     if file.filename == "":
@@ -38,8 +45,8 @@ def predict():
     # ── STEP 2: Read form fields ──────────────────────────────
     # These come from App.jsx FormData
     # crop_name and land_acres are from the crop popup the farmer fills
-    crop_name  = request.form.get("crop", "").strip()
-    land_size  = request.form.get("land", "0").strip()
+    crop_name = request.form.get("crop", "").strip()
+    land_size = request.form.get("land", "0").strip()
 
     # ── STEP 3: GPS coordinates ───────────────────────────────
     # These come from browser navigator.geolocation in App.jsx
@@ -69,7 +76,7 @@ def predict():
     #   - crop health score calculation
     #   - urgency timeline hours
     # ─────────────────────────────────────────────────────────
-    weather      = get_weather_by_coords(lat, lon)
+    weather = get_weather_by_coords(lat, lon)
     weather_risk = weather.get("risk_score", 50)
 
     # ── STEP 6: Run AI inference ──────────────────────────────
@@ -92,11 +99,11 @@ def predict():
     # ─────────────────────────────────────────────────────────
     if crop_name and land_acres > 0:
         economics = calculate_loss(
-            crop_name    = crop_name,
-            land_acres   = land_acres,
-            loss_pct     = result["loss_pct"],
-            confidence   = result["confidence"],
-            weather_risk = weather_risk,
+            crop_name=crop_name,
+            land_acres=land_acres,
+            loss_pct=result["loss_pct"],
+            confidence=result["confidence"],
+            weather_risk=weather_risk,
         )
         result["economics"] = economics
     else:
@@ -116,9 +123,16 @@ def predict():
 # Info endpoint — visit GET /predict in browser to confirm route works
 @predict_bp.route("/predict", methods=["GET"])
 def predict_info():
-    return jsonify({
-        "endpoint": "POST /predict",
-        "required_fields": ["image (file)"],
-        "optional_fields": ["crop (string)", "land (float)", "lat (float)", "lon (float)"],
-        "status": "ready"
-    })
+    return jsonify(
+        {
+            "endpoint": "POST /predict",
+            "required_fields": ["image (file)"],
+            "optional_fields": [
+                "crop (string)",
+                "land (float)",
+                "lat (float)",
+                "lon (float)",
+            ],
+            "status": "ready",
+        }
+    )
