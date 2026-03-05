@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { T, CSS, shM } from "./utils/theme";
-import { API_BASE, LANGS, TOUR_STEPS } from "./utils/constants";
-import { getMSP, tierStyle, fungicideColor } from "./utils/helpers";
-import { KVLogo, G, WeatherIcon } from "./components/icons/Icons";
-import { PrimaryBtn } from "./components/ui/PrimaryBtn";
-import { ITile } from "./components/ui/ITile";
+import { T, CSS } from "./utils/theme";
+import { API_BASE, TOUR_STEPS } from "./utils/constants";
 
 import { LoginPage } from "./components/features/auth/LoginPage";
 import { HomeScreen } from "./components/features/home/HomeScreen";
@@ -12,6 +8,12 @@ import { ResultsScreen } from "./components/features/results/ResultsScreen";
 import { SchemesScreen } from "./components/features/schemes/SchemesScreen";
 import { CropPopup } from "./components/features/results/CropPopup";
 import { TourBubble } from "./components/layout/TourBubble";
+import { TopNav } from "./components/layout/TopNav";
+import { BottomNav } from "./components/layout/BottomNav";
+import { ProfilePopup } from "./components/layout/ProfilePopup";
+import { LanguagePopup } from "./components/layout/LanguagePopup";
+import { ComingSoonPopup } from "./components/layout/ComingSoonPopup";
+import { G } from "./components/icons/Icons";
 
 export default function App() {
   const [page, setPage] = useState("login");
@@ -243,18 +245,18 @@ export default function App() {
     ],
     economics: farmData
       ? {
-          projected_loss: Math.round(farmData.land * 8000 * 12 * 0.65),
-          treatment_cost: Math.round(farmData.land * 1200),
-          net_saving:
-            Math.round(farmData.land * 8000 * 12 * 0.65) -
-            Math.round(farmData.land * 1200),
-          insurance_cover: Math.min(
-            Math.round(farmData.land * 8000 * 12 * 0.65),
-            200000,
-          ),
-          risk_label: "SEVERE",
-          msp_per_kg: 12,
-        }
+        projected_loss: Math.round(farmData.land * 8000 * 12 * 0.65),
+        treatment_cost: Math.round(farmData.land * 1200),
+        net_saving:
+          Math.round(farmData.land * 8000 * 12 * 0.65) -
+          Math.round(farmData.land * 1200),
+        insurance_cover: Math.min(
+          Math.round(farmData.land * 8000 * 12 * 0.65),
+          200000,
+        ),
+        risk_label: "SEVERE",
+        msp_per_kg: 12,
+      }
       : null,
     demo: true,
   };
@@ -380,265 +382,17 @@ export default function App() {
         flexDirection: "column",
       }}
     >
-      {/* TOP NAV */}
-      <div
-        style={{
-          background: T.nav,
-          borderBottom: `1px solid ${T.border}`,
-          padding: "11px 18px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          boxShadow: "0 1px 10px rgba(0,0,0,0.05)",
-          flexShrink: 0,
-        }}
-      >
-        <button
-          onClick={() => setShowProf((p) => !p)}
-          style={{
-            background: `linear-gradient(135deg,${T.deep},${T.green})`,
-            border: "none",
-            borderRadius: "50%",
-            width: 40,
-            height: 40,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(22,163,74,0.35)",
-          }}
-        >
-          <G n="user" s={18} c="#fff" w={2} />
-        </button>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <KVLogo size={28} />
-            <span
-              style={{
-                fontWeight: 800,
-                fontSize: "1.05rem",
-                color: T.deep,
-                letterSpacing: "-0.4px",
-              }}
-            >
-              KrishiVigil<span style={{ color: T.green }}>.ai</span>
-            </span>
-          </div>
-          <div
-            style={{
-              fontSize: "0.53rem",
-              color: T.muted,
-              letterSpacing: "1px",
-              marginTop: 1,
-            }}
-          >
-            SMART CROP PROTECTION
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <button
-            onClick={() => cs("Alert Notifications")}
-            style={{
-              background: T.border2,
-              border: `1px solid ${T.border}`,
-              borderRadius: "50%",
-              width: 36,
-              height: 36,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
-          >
-            <G n="bell" s={16} c={T.green} w={2} />
-            <span
-              style={{
-                position: "absolute",
-                top: 6,
-                right: 6,
-                background: T.red,
-                borderRadius: "50%",
-                width: 7,
-                height: 7,
-                border: "1.5px solid #fff",
-                boxShadow: pulse ? "0 0 0 3px rgba(220,38,38,0.2)" : "none",
-                transition: "box-shadow 0.4s",
-              }}
-            />
-          </button>
-          <button
-            onClick={() => setShowLang(true)}
-            style={{
-              background: T.border2,
-              border: `1.5px solid ${T.green}`,
-              borderRadius: 22,
-              padding: "5px 11px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 5,
-              fontFamily: "inherit",
-            }}
-          >
-            <G n="globe" s={13} c={T.deep} w={2} />
-            <span
-              style={{ fontWeight: 700, fontSize: "0.7rem", color: T.deep }}
-            >
-              हि/ਪੰ
-            </span>
-          </button>
-        </div>
-      </div>
+      <TopNav setShowProf={setShowProf} cs={cs} setShowLang={setShowLang} pulse={pulse} />
 
       <div style={{ flex: 1, overflowY: "auto", position: "relative" }}>
-        {/* PROFILE POPUP */}
         {showProf && (
-          <div
-            style={{
-              position: "absolute",
-              top: 6,
-              left: 14,
-              background: T.card,
-              borderRadius: 18,
-              padding: 18,
-              boxShadow: shM,
-              zIndex: 100,
-              width: 236,
-              border: `1px solid ${T.border}`,
-              animation: "fadeSlideIn 0.18s ease",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                marginBottom: 14,
-                paddingBottom: 12,
-                borderBottom: `1px solid ${T.border2}`,
-              }}
-            >
-              <div
-                style={{
-                  background: `linear-gradient(135deg,${T.deep},${T.green})`,
-                  borderRadius: "50%",
-                  width: 44,
-                  height: 44,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <G n="user" s={20} c="#fff" w={1.8} />
-              </div>
-              <div>
-                <div
-                  style={{
-                    fontWeight: 700,
-                    fontSize: "0.88rem",
-                    color: T.text,
-                  }}
-                >
-                  Krishna Singh
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.66rem",
-                    color: T.muted,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 4,
-                    marginTop: 2,
-                  }}
-                >
-                  <G n="gps" s={10} c={T.muted} w={2} />
-                  {gpsStatus === "live"
-                    ? `GPS Live (${userLat.toFixed(2)}, ${userLon.toFixed(2)})`
-                    : W.location}
-                </div>
-              </div>
-            </div>
-            {[
-              ["map", "Location", W.location],
-              [
-                "drop",
-                "Weather",
-                W.temperature !== "--"
-                  ? `${W.temperature}°C, ${W.humidity}% humidity`
-                  : "Loading...",
-              ],
-              ["scan", "Total Scans", "12 crops scanned"],
-            ].map(([icon, label, val]) => (
-              <div
-                key={label}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  padding: "7px 0",
-                  borderBottom: `1px solid #f1fdf4`,
-                  fontSize: "0.74rem",
-                }}
-              >
-                <span
-                  style={{
-                    color: T.muted,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  <G n={icon} s={12} c={T.muted} w={2} />
-                  {label}
-                </span>
-                <span
-                  style={{
-                    fontWeight: 600,
-                    color: T.text,
-                    fontSize: "0.68rem",
-                    textAlign: "right",
-                    maxWidth: 120,
-                  }}
-                >
-                  {val}
-                </span>
-              </div>
-            ))}
-            <div
-              style={{
-                marginTop: 10,
-                fontSize: "0.66rem",
-                color: T.muted,
-                background: T.border2,
-                borderRadius: 9,
-                padding: "8px 10px",
-                lineHeight: 1.5,
-              }}
-            >
-              {gpsStatus === "live"
-                ? "GPS active — weather is live from your exact field location"
-                : "GPS not available — using default location"}
-            </div>
-            <button
-              onClick={() => setShowProf(false)}
-              style={{
-                marginTop: 8,
-                width: "100%",
-                background: "none",
-                border: "none",
-                color: T.muted,
-                cursor: "pointer",
-                fontSize: "0.68rem",
-                fontFamily: "inherit",
-              }}
-            >
-              Close
-            </button>
-          </div>
+          <ProfilePopup
+            setShowProf={setShowProf}
+            gpsStatus={gpsStatus}
+            userLat={userLat}
+            userLon={userLon}
+            W={W}
+          />
         )}
 
         {screen === "home" && (
@@ -691,196 +445,9 @@ export default function App() {
 
         {showCropPopup && <CropPopup onSubmit={handleCropSubmit} />}
 
-        {csLabel && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "rgba(5,46,22,0.5)",
-              zIndex: 300,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 24,
-            }}
-            onClick={() => setCSLabel(null)}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                background: T.card,
-                borderRadius: 22,
-                padding: 28,
-                textAlign: "center",
-                maxWidth: 300,
-                width: "100%",
-                boxShadow: shM,
-                animation: "popIn 0.2s ease",
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-flex",
-                  background: "#f0fdf4",
-                  borderRadius: "50%",
-                  padding: 18,
-                  marginBottom: 14,
-                }}
-              >
-                <G n="star" s={28} c={T.green} w={2} />
-              </div>
-              <div
-                style={{
-                  fontWeight: 800,
-                  fontSize: "1.1rem",
-                  color: T.text,
-                  marginBottom: 6,
-                }}
-              >
-                Coming Soon!
-              </div>
-              <div
-                style={{
-                  fontSize: "0.78rem",
-                  color: T.text,
-                  fontWeight: 600,
-                  marginBottom: 6,
-                }}
-              >
-                {csLabel}
-              </div>
-              <div
-                style={{
-                  fontSize: "0.7rem",
-                  color: T.muted,
-                  marginBottom: 22,
-                  lineHeight: 1.6,
-                }}
-              >
-                This feature is under development and will be available in the
-                next version of KrishiVigil.ai
-              </div>
-              <PrimaryBtn
-                onClick={() => setCSLabel(null)}
-                style={{ padding: "12px 36px", fontSize: "0.9rem" }}
-              >
-                Got it
-              </PrimaryBtn>
-            </div>
-          </div>
-        )}
+        <ComingSoonPopup csLabel={csLabel} setCSLabel={setCSLabel} />
 
-        {showLang && (
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "rgba(5,46,22,0.5)",
-              zIndex: 200,
-              display: "flex",
-              alignItems: "flex-end",
-            }}
-            onClick={() => setShowLang(false)}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                background: T.card,
-                width: "100%",
-                borderRadius: "22px 22px 0 0",
-                padding: "22px 20px 30px",
-                animation: "slideUp 0.22s ease",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  marginBottom: 5,
-                }}
-              >
-                <ITile icon="globe" size="md" />
-                <div>
-                  <div
-                    style={{ fontWeight: 700, fontSize: "1rem", color: T.text }}
-                  >
-                    Select Language
-                  </div>
-                  <div style={{ fontSize: "0.67rem", color: T.muted }}>
-                    Regional support coming soon
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{ height: 1, background: T.border2, margin: "14px 0" }}
-              />
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: 10,
-                  marginBottom: 16,
-                }}
-              >
-                {LANGS.map((l) => (
-                  <button
-                    key={l.s}
-                    onClick={() => {
-                      setShowLang(false);
-                      cs(`${l.s} Language Support`);
-                    }}
-                    style={{
-                      background: "#f0fdf4",
-                      border: `1px solid ${T.border}`,
-                      borderRadius: 13,
-                      padding: "12px 13px",
-                      cursor: "pointer",
-                      textAlign: "left",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontWeight: 700,
-                        fontSize: "0.95rem",
-                        color: T.deep,
-                      }}
-                    >
-                      {l.s}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "0.61rem",
-                        color: T.muted,
-                        marginTop: 2,
-                      }}
-                    >
-                      {l.sub}
-                    </div>
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={() => setShowLang(false)}
-                style={{
-                  width: "100%",
-                  background: T.bg,
-                  border: `1px solid ${T.border}`,
-                  borderRadius: 13,
-                  padding: "12px",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                  fontFamily: "inherit",
-                  color: T.text,
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+        {showLang && <LanguagePopup setShowLang={setShowLang} cs={cs} />}
       </div>
 
       {(screen === "results" || screen === "schemes") && (
@@ -918,57 +485,7 @@ export default function App() {
         </div>
       )}
 
-      <div
-        style={{
-          background: T.nav,
-          borderTop: `1px solid ${T.border}`,
-          display: "flex",
-          flexShrink: 0,
-          boxShadow: "0 -2px 16px rgba(0,0,0,0.05)",
-        }}
-      >
-        {[
-          ["clock", "History", () => cs("Scan History"), false],
-          ["shield", "Schemes", () => go("schemes"), screen === "schemes"],
-          ["download", "Downloads", () => cs("PDF Downloads"), false],
-        ].map(([icon, label, action, active]) => (
-          <button
-            key={label}
-            onClick={action}
-            style={{
-              flex: 1,
-              padding: "12px 8px 10px",
-              background: active ? "#f0fdf4" : "none",
-              border: "none",
-              borderTop: active
-                ? `2px solid ${T.green}`
-                : "2px solid transparent",
-              cursor: "pointer",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 4,
-              fontFamily: "inherit",
-            }}
-          >
-            <G
-              n={icon}
-              s={19}
-              c={active ? T.green : T.muted}
-              w={active ? 2.2 : 1.8}
-            />
-            <span
-              style={{
-                fontSize: "0.59rem",
-                color: active ? T.green : T.muted,
-                fontWeight: active ? 700 : 500,
-              }}
-            >
-              {label}
-            </span>
-          </button>
-        ))}
-      </div>
+      <BottomNav screen={screen} cs={cs} go={go} />
 
       {tourActive && !tourDone && page === "main" && (
         <TourBubble
