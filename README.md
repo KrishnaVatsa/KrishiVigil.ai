@@ -1,4 +1,4 @@
-## KrishiVigil.ai-
+## KrishiVigil.ai
 "SMART CROP PROTECTION"
 
 ## Description:-                                                                                                      
