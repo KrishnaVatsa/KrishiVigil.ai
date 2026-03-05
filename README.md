@@ -105,9 +105,9 @@ Indian fungicide brand names used (Ridomil Gold, Dithane M-45, etc.)
 - All result cards read from apiResult (Flask JSON response)
 - weatherData state populated from GET /weather or from /predict response
 
-  ## 📸 Application Screenshots
+## Application Screenshots
 
- Home Screen
+Home Screen
 ![Home](screenshots/home.png)
 ![Home2](screenshots/home2.png)
 
