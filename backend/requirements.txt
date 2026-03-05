@@ -1,0 +1,32 @@
+# =============================================================
+# FILE: backend/requirements.txt
+# PURPOSE: Python packages needed to run Flask backend
+#
+# INSTALL ALL AT ONCE:
+#   py -3.11 -m pip install -r requirements.txt
+#
+# NOTE: tensorflow is listed separately at the bottom
+# because it takes longer to install (600MB+)
+# Install it ONLY after placing plant_model.h5 in backend/
+# =============================================================
+
+# Web framework
+flask==3.0.2
+flask-cors==4.0.0
+
+# Image processing (for resizing uploaded crop images)
+Pillow==10.2.0
+
+# Math (for AI inference calculations)
+numpy==1.26.4
+
+# HTTP requests (for OpenWeatherMap API calls)
+requests==2.31.0
+
+# =============================================================
+# INSTALL TENSORFLOW SEPARATELY (only when model is ready):
+#   py -3.11 -m pip install tensorflow==2.15.0
+#
+# Requires Python 3.11 (NOT 3.12 or 3.13 — too new)
+# If you get errors: py -3.11 -m pip install tensorflow-cpu==2.15.0
+# =============================================================
