@@ -107,40 +107,42 @@ Indian fungicide brand names used (Ridomil Gold, Dithane M-45, etc.)
 
 ## Application Screenshots:-
 
-Home Screen
-![Home](screenshots/home.png)
-![Home2](screenshots/home2.png)
+### Home Screen
+<img src="screenshots/home.png" width="500">
 
-Profile
-![Profile](screenshots/profilewindow.png)
+<img src="screenshots/home2.png" width="500">
 
-Language change
-![Language](screenshots/languagechange.png)
+### Profile
+<img src="screenshots/profilewindow.png" width="500">
 
-Image Upload
-![Upload](screenshots/upload.png)
+### Language Change
+<img src="screenshots/languagechange.png" width="500">
 
-Farm Details I/P from user
-![FarmDetails](screenshots/farmdetailsinput.png)
+### Image Upload
+<img src="screenshots/upload.png" width="500">
 
-Result Dashboard
-![Dashboard](screenshots/resultdashboard.png)
+### Farm Details Input From User
+<img src="screenshots/farmdetailsinput.png" width="500">
 
-Disease Detection Result
-![Result](screenshots/result.png)
+### Result Dashboard
+<img src="screenshots/resultdashboard.png" width="500">
 
-Treatment Recommendations & Action Plan 
-![Treatment&Action](screenshots/treatment.png)
+### Disease Detection Result
+<img src="screenshots/result.png" width="500">
 
-Weather Risk Analysis
-![Weather](screenshots/weather.png)
-![Weather2](screenshots/weather2.png)
+### Treatment Recommendations & Action Plan
+<img src="screenshots/treatment.png" width="500">
 
-Financial Loss Estimation & Government Scheme Suggestions
-![Loss&Schemes](screenshots/loss.png)
+### Weather Risk Analysis
+<img src="screenshots/weather.png" width="500">
 
-Explopre Govt schemes
-![GovtSchemes](screenshots/govtschemes.png)
+<img src="screenshots/weather2.png" width="500">
 
-Download Prv search Crop Health Report
-![Report](screenshots/report.png)
+### Financial Loss Estimation & Government Scheme Suggestions
+<img src="screenshots/loss.png" width="500">
+
+### Explore Government Schemes
+<img src="screenshots/govtschemes.png" width="500">
+
+### Download Previous Crop Health Report
+<img src="screenshots/report.png" width="500">
