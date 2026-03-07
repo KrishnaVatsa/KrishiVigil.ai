@@ -28,7 +28,7 @@ The trained model is exported as a `.h5` file and integrated with the Flask back
 - Backend: Flask (Python 3.11)
 - AI Model: EfficientNetB3 trained on PlantVillage dataset (Kaggle)
   99.6% accuracy, 38 classes, exported as plant_model.h5
-- Weather: OpenWeatherMap free API (key: c8d59e65197776ffdefe8cdcf61e726e)
+- Weather: OpenWeatherMap free API
 
 ## FOLDER STRUCTURE:-
 C:\Users\wtcaa\krishivigil\
