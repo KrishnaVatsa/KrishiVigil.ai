@@ -1,43 +1,153 @@
-## KrishiVigil.ai
-"SMART CROP PROTECTION"
+# 🌾 KrishiVigil.ai — Smart Crop Protection
 
-## Description:-                                                                                                      
-KrishiVigil.ai is an AI-powered agriculture platform that helps farmers detect crop diseases early using computer vision. 
-Farmers can upload images of any infected part of a crop (leaf, fruit, stem, or plant surface). The system analyzes the image using a deep learning model and generates a complete crop health report including disease prediction, confidence score, yield loss estimation, treatment suggestions, weather risk analysis, and government scheme recommendations.
+> AI-powered crop disease detection and farm advisory platform for Indian farmers.
+> Upload a photo of any infected crop part → get instant diagnosis, treatment plan, and economic loss estimate in under 3 seconds.
 
-## Features:-
-- 🌿 AI-based crop disease detection from leaf, fruit, stem, or any infected plant area 
-- 📊 Crop health score and disease severity analysis
-- ⏱ Treatment urgency timeline
-- 🧪 Smart treatment and fungicide recommendations
-- 🌦 Weather risk intelligence for disease spread
-- 💰 Crop loss and financial impact estimation
-- 🏛 Government scheme recommendations for farmers
-- 📄 Downloadable crop health report 
-  
-## AI Model:-
-- Dataset: PlantVillage Dataset (Kaggle)
-- Framework: TensorFlow / Keras
-- Architecture: EfficientNetB3 (Transfer Learning)
-- Training Platform: Kaggle Notebook
-- Validation Accuracy: ~99%
-The trained model is exported as a `.h5` file and integrated with the Flask backend for real-time disease prediction.
+---
 
- ## Tech Stack:-
- - Frontend: React + Vite
-- Backend: Flask (Python 3.11)
-- AI Model: EfficientNetB3 trained on PlantVillage dataset (Kaggle)
-  99.6% accuracy, 38 classes, exported as plant_model.h5
-- Weather: OpenWeatherMap free API (key: c8d59e65197776ffdefe8cdcf61e726e)
+## 📄 License
 
-## FOLDER STRUCTURE:-
-C:\Users\wtcaa\krishivigil\
-├── frontend\
-│   └── src\
-│       └── App.jsx         (single file React app — all UI here)
-└── backend\
-    ├── app.py              (Flask entry point)
-    ├── plant_model.h5      (Kaggle EfficientNetB3 model)
+© belongs to @krishnaVatsa & @Anand1-here
+Research & Analysis: Kaustuv Baidya & Divyansh Kumar
+
+---
+
+
+## 📌 What It Does
+
+KrishiVigil.ai lets farmers upload an image of any infected part of their crop — leaf, fruit, stem, or plant surface — and instantly receive:
+
+- 🤖 **AI disease detection** with confidence score (52 disease classes across 14 crop types)
+- 📊 **Crop health score** (1–10) based on AI confidence + weather + yield loss
+- ⏱ **Treatment urgency timeline** — act within X hours
+- 🧪 **Fungicide recommendations** — Indian brand names, doses, and timing
+- 🌦 **Live weather risk analysis** — disease spread risk from real GPS-based weather
+- 💰 **Economic loss in ₹** — calculated using government MSP rates and ICAR yield data
+- 🏛 **Government scheme matching** — auto-matched central and state schemes based on crop, loss, and location
+- 📄 **Downloadable crop health report** — saved permanently per user account
+- 🕒 **Scan history** — all past analyses saved to user account, survive backend restarts
+- 🌐 **Multilingual UI** — supports Hindi and regional crop name input
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology | Version |
+|---|---|---|
+| Frontend | React | ^19.2.0 |
+| Frontend Build | Vite | ^7.3.1 |
+| Backend | Flask (Python) | 3.0.2 |
+| Cross-Origin | Flask-CORS | 4.0.0 |
+| AI Model | YOLOv8x-cls (Ultralytics) | ultralytics>=8.2.0 |
+| Image Processing | Pillow | 10.2.0 |
+| Math | NumPy | 1.26.4 |
+| Weather API | OpenWeatherMap | Free tier |
+| HTTP Client | Requests | 2.31.0 |
+| Persistent Storage | JSON file-based (scans.json, downloads.json) | — |
+
+---
+# 🏗 System Architecture
+
+             Farmer / User
+                  │
+                  ▼
+        ┌─────────────────────┐
+        │   React Frontend    │
+        │  (Vite + React 19)  │
+        │                     │
+        │ Image Upload UI    │
+        │ Crop + Land Input  │
+        │ Result Dashboard   │
+        └─────────┬──────────┘
+                  │
+                  │ REST API
+                  ▼
+        ┌─────────────────────┐
+        │   Flask Backend     │
+        │    (Python 3.11)    │
+        │                     │
+        │ Auth Routes        │
+        │ Prediction API     │
+        │ Scan History API   │
+        │ Download API       │
+        └─────────┬──────────┘
+                  │
+                  │
+      ┌───────────┼─────────────┐
+      ▼                           ▼
+
+┌──────────────┐        ┌─────────────────┐
+│ YOLOv8 Model │        │ Weather Service │
+│  (.pt file)  │        │ OpenWeather API │
+│              │        │                 │
+│ Image        │        │ Temperature     │
+│ Classification│       │ Humidity        │
+│ Disease Class│        │ Risk Score      │
+└───────┬──────┘        └─────────┬───────┘
+        │                         │
+        ▼                         ▼
+        ┌─────────────────────────┐
+        │   Economic Engine       │
+        │                         │
+        │ MSP crop prices        │
+        │ Yield tables           │
+        │ Loss estimation (₹)    │
+        └───────────┬────────────┘
+                    │
+                    ▼
+            JSON Response
+                    │
+                    ▼
+           React Result Dashboard
+## 🤖 AI Model
+
+| Property | Details |
+|---|---|
+| Architecture | YOLOv8x-cls (Ultralytics) |
+| Framework | PyTorch (via Ultralytics) |
+| Dataset | New Plant Diseases Dataset (Kaggle) — augmented, 87,000+ images + custom Rice & Wheat classes |
+| Training platform | Kaggle Notebook (GPU T4 x2) |
+| Classes | **52** (38 PlantVillage + 3 Rice + 11 Wheat — diseases + healthy) |
+| Input size | 300 × 300 × 3 (RGB) |
+| Output format | `.pt` file loaded by Flask at startup |
+| Validation accuracy | 96–98% on test set |
+| Model file name | `plant_model_yolo.pt` |
+
+The model is trained on the augmented PlantVillage dataset extended with custom Rice and Wheat disease classes. Class names are stored inside the `.pt` file and read automatically via `model.names` at startup.
+
+---
+
+## 📁 Folder Structure
+
+```
+krishivigil/
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx                ← entire UI (single-file React app)
+│   │   ├── main.jsx
+│   │   ├── components/
+│   │   │   ├── LoginPage.jsx      ← register / login screen
+│   │   │   ├── CropPopup.jsx      ← crop name + land size input
+│   │   │   ├── TourBubble.jsx     ← onboarding tour overlay
+│   │   │   ├── UIComponents.jsx   ← reusable UI primitives
+│   │   │   └── UIHelpers.jsx      ← tier/color helper functions
+│   │   ├── config/
+│   │   │   └── api.js             ← API_BASE URL config
+│   │   ├── constants/
+│   │   │   ├── appData.js         ← LANGS, STEPS, TOUR_STEPS
+│   │   │   ├── msp.js             ← MSP rates per crop
+│   │   │   └── schemes.js         ← government schemes data
+│   │   ├── icons/
+│   │   │   └── icons.jsx          ← SVG icon components
+│   │   └── theme/
+│   │       └── theme.js           ← color tokens + style helpers
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+└── backend/
+    ├── app.py                     ← Flask entry point, registers all blueprints
+    ├── plant_model_yolo.pt        ← trained YOLOv8 model (place here)
     ├── requirements.txt
     ├── users.json                 ← user accounts (auto-created)
     ├── scans.json                 ← persistent scan history (auto-created)
@@ -302,4 +412,4 @@ vite: ^7.3.1
 <img src="screenshots/govtschemes.png" width="300">
 
 ### Scan History & Downloads
-<img src="screenshots/report.png" width="300">
+<img src="screenshots/report.png" width="300">         this is readme file of my project check in this architect is added or not if not add it 
