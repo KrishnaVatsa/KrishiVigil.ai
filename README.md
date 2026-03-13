@@ -7,7 +7,7 @@
 
 ## 📄 License
 
-© belongs to @KrishnaVatsa & @Anand1-here
+© belongs to @KrishnaVatsa & @Anand1-here                                                                                    
 Research & Analysis: Kaustuv Baidya & Divyansh Kumar
 
 ## ⚠️ Note:
