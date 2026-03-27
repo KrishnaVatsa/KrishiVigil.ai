@@ -97,7 +97,7 @@ K --> L[React Dashboard]
 |---|---|
 | Architecture | YOLOv8x-cls (Ultralytics) |
 | Framework | PyTorch |
-| Dataset | PlantVillage (87k+ images) + custom Rice & Wheat |
+| Dataset | PlantVillage (100k+ images) + custom Rice & Wheat |
 | Classes | 52 |
 | Accuracy | 96–98% |
 | Model file | `plant_model_yolo.pt` |
