@@ -166,7 +166,6 @@ C --> C6[engines/economic_engine.py]
 5. Economic loss calculated  
 6. JSON response returned  
 7. Dashboard shows insights  
-
 ---
 
 ## 🧮 Key Calculations
